@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTT Spielcodes</title>
+    <title>Spielcodes</title>
     <link rel="icon" type"image/png" href="./ftt_logo.png">
     <style>
         body {
@@ -67,9 +67,31 @@
             transition: background-color 0.3s;
         }
 
+        #settings-button {
+            position: absolute;
+            top: 1vh;
+            left: 1vw;
+            font-size: clamp(14px, 4vw, 24px);
+            border: none;
+            background-color: #007BFF;
+            cursor: pointer;
+            color: white;
+        }
+        #add-team-button {
+            position: absolute;
+            top: 1vh;
+            right: 1vw;
+            font-size: clamp(14px, 4vw, 24px);
+            border: none;
+            background-color: #007BFF;
+            cursor: pointer;
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <button id="settings-button" onclick="location.href='settings.html'">⚙︎</button>
+    <button id="add-team-button" onclick="location.href='addteam.html'">Bearbeiten</button>
     <h1 id="headline">Mannschaft auswählen</h1>
     <div class="button-container" id="initial-buttons">
         <button onclick="location.href='codes.html?herren=1'">Herren I</button>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTT Spielcodes</title>
+    <title>Spielcodes</title>
     <link rel="icon" type"image/png" href="./ftt_logo.png">
     <style>
         body {
@@ -88,7 +88,6 @@
             background-color: #007BFF;
             cursor: pointer;
             color: white;
-            display: none; /* Hidden initially */
         }
         #show-old-button {
             position: absolute;
@@ -99,7 +98,6 @@
             background-color: #007BFF;
             cursor: pointer;
             color: white;
-            display: none; /* Hidden initially */
         }
     </style>
 </head>
@@ -114,8 +112,7 @@
 
     <!-- <div id="new-buttons" style="display: none;"></div> -->
     <script>
-        let globalHerren = -1;
-        let globalJugend = -1
+        let globalTeam = -1
         let dataList = null;
         let showingOld = false;
         function getQueryParam(name) {
@@ -124,10 +121,8 @@
           }
 
           document.addEventListener("DOMContentLoaded", () => {
-            let herren = parseInt(getQueryParam("herren")) || -1;
-            let jugend = parseInt(getQueryParam("jugend")) || -1;
-            globalHerren = herren;
-            globalJugend = jugend;
+            let team = parseInt(getQueryParam("team")) || -1;
+            globalTeam = team;
             generateButtons(herren, jugend, showOld = false)
           });
 
@@ -200,35 +195,9 @@
         
 
 
-        function generateButtons(herren, jugend, showOld = false) {
+        function generateButtons(name, pins, codes, showOld = false) {
             const headline = document.getElementById('headline');
-            inputScript = "Herren1.js";
-            if (herren == 1) {
-                console.log("Herren I");
-                headline.textContent = 'Herren I';
-                inputScript = "Herren1.js";
-
-            } else if (herren == 2) {
-                console.log("Herren II");
-                headline.textContent = 'Herren II';
-                inputScript = "Herren2.js";
-            } else if (herren == 3) {
-                console.log("Herren III");
-                headline.textContent = 'Herren III';
-                inputScript = "Herren3.js";
-            } else if (jugend == 1) {
-                console.log("Jugend I");
-                headline.textContent = 'Jugend I';
-                inputScript = "Jugend1.js";
-            } else if (jugend == 2) {
-                console.log("Jugend II");
-                headline.textContent = 'Jugend II';
-                inputScript = "Jugend2.js";
-            } else if (jugend == 3) {
-                console.log("Bambini");
-                headline.textContent = 'Bambini';
-                inputScript = "Jugend3.js";
-            }
+            headline.textContent = name;
             document.getElementById('back-button').style.display = 'block';
             document.getElementById('show-old-button').style.display = 'block';
             const newButtonsContainer = document.getElementById('new-buttons');
@@ -237,40 +206,36 @@
             newButtonsContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
             newButtonsContainer.style.gap = '10px';
 
-            loadData(inputScript, function(list) {
-                console.log("Now I can safely use dataList:", list[3]);
-                let j = 0;
-                if (showOld) {
-                    for(let i = 0; i < list[3].length; i++) {
-                        if (list[3][i]) {
-                            addCodeButton(newButtonsContainer, list[2][i], list[0][i], list[5][j], heimspiel = true);
-                            addPinButton(newButtonsContainer, list[1][i], heimspiel = true);
+            let j = 0;
+            if (showOld) {
+                for(let i = 0; i < pins[3].length; i++) {
+                    if (pins[3][i]) {
+                        addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], codes[0][j], heimspiel = true);
+                        addPinButton(newButtonsContainer, pins[1][i], heimspiel = true);
+                        j += 1;
+                    } else {
+                        addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], heimspiel = false);
+                        addPinButton(newButtonsContainer, pins[1][i], heimspiel = false);
+                    }
+                }
+            } else {
+                console.log(Math.min(pins[3].length, 10));
+                let k = 0;
+                for(let i = 0; i < pins[3].length; i++) {
+                    if (notPastDate(pins[0][i]) && k < 10) {
+                        k +=1;
+                        console.log("I was here");
+                        if (pins[3][i]) {
+                            addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], codes[0][j], heimspiel = true);
+                            addPinButton(newButtonsContainer, pins[1][i], heimspiel = true);
                             j += 1;
                         } else {
-                            addCodeButton(newButtonsContainer, list[2][i], list[0][i], heimspiel = false);
-                            addPinButton(newButtonsContainer, list[1][i], heimspiel = false);
-                        }
-                    }
-                } else {
-                    console.log(Math.min(list[3].length, 10));
-                    let k = 0;
-                    for(let i = 0; i < list[3].length; i++) {
-                        console.log(list[0][i]);
-                        if (notPastDate(list[0][i]) && k < 10) {
-                            k +=1;
-                            console.log("I was here");
-                            if (list[3][i]) {
-                                addCodeButton(newButtonsContainer, list[2][i], list[0][i], list[5][j], heimspiel = true);
-                                addPinButton(newButtonsContainer, list[1][i], heimspiel = true);
-                                j += 1;
-                            } else {
-                                addCodeButton(newButtonsContainer, list[2][i], list[0][i], heimspiel = false);
-                                addPinButton(newButtonsContainer, list[1][i], heimspiel = false);
-                            }
+                            addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], heimspiel = false);
+                            addPinButton(newButtonsContainer, pins[1][i], heimspiel = false);
                         }
                     }
                 }
-            });
+            }
         }
     </script>
 

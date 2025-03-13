@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spielcodes</title>
+    <link rel="icon" type"image/png" href="./ftt_logo.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+    <h1 id="headline">Allgemeine Einstellungen</h1>
+    <div id="pin-form" style="display: none;">
+        <label for="entered-pin">Bitte Pin Eingeben:</label>
+        <input type="password" id="entered-pin" />
+        <button onclick="validatePin()">Eingeben</button>
+    </div>
+    <div class="settings-container" id="settings-page" style="display: none;">
+        <ul class="settings-list">
+            <li>
+                <span>Vollständiger Vereinsname</span>
+                <input type="text" id="verein" placeholder="Vereinsname">
+                <button id="enter-verein-button" onclick="submitVereinsName()">Aktualisieren</button>
+            </li>
+            <li>
+                <span>Pin festlegen (optional)</span>
+                <input type="text" id="pin" placeholder="Pin">
+                <button id="enter-pin-button" onclick="submitPin()">Aktualisieren</button>
+            </li>
+            <li>
+                <span>Pin Löschen</span>
+                <button id="delete-pin-button" onclick="deletePin()">Löschen</button>
+            </li>
+        </ul>
+        <div class="center">
+            <button onclick="closeSettings()">Zurück</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
+    <script src="scripts/settings.js"></script>
+</body>
+</html>
