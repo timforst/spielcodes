@@ -1,22 +1,14 @@
 verein = "FTT Hartmannshofen 1987";
-pin = "";
+password = "";
 
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('verein')) {
         verein = JSON.parse(localStorage.getItem('verein'));
     }
-    if (localStorage.getItem('pin')) {
-        pin = JSON.parse(localStorage.getItem('pin'));
-        if (pin != '') {
-            console.log(pin);
-            document.getElementById('pin-form').style.display = 'block';
-        } else {
-            document.getElementById('delete-pin-button').textContent = 'Kein Pin';
-            document.getElementById('settings-page').style.display = 'block';
-        }
+    if (localStorage.getItem('password')) {
+        password = JSON.parse(localStorage.getItem('password'));
     } else {
-        document.getElementById('settings-page').style.display = 'block';
-        document.getElementById('delete-pin-button').textContent = 'Kein Pin';
+        document.getElementById('delete-password-button').textContent = 'Kein Passwort';
     }
 });
 
@@ -30,32 +22,22 @@ function submitVereinsName() {
     }
 }
 
-function submitPin() {
-    const tempPin = document.getElementById('pin');
-    const realPin = tempPin.value.trim();
-    if (realPin) {
-        let pin = realPin;
-        localStorage.setItem('pin', JSON.stringify(pin));
-        tempPin.value = '';
+function submitPassword() {
+    const tempPassword = document.getElementById('password');
+    const realPassword = tempPassword.value.trim();
+    if (realPassword) {
+        let password = realPassword;
+        localStorage.setItem('password', JSON.stringify(password));
+        tempPassword.value = '';
+        document.getElementById('delete-password-button').textContent = 'Löschen';
     }
 }
 
-function validatePin() {
-    enteredPin = document.getElementById('entered-pin');
-    if (enteredPin.value.trim() == pin) {
-        document.getElementById('pin-form').style.display = 'none';
-        document.getElementById('settings-page').style.display = 'block';
-    } else {
-        const label = document.querySelector('label[for="entered-pin"]');
-        label.textContent = "Falsche Pin, bitte erneut versuchen";
-    }
-}
-
-function deletePin() {
-    localStorage.setItem('pin', JSON.stringify(""));
-    document.getElementById('delete-pin-button').textContent = 'Kein Pin';
-    pin = "";
-    console.log("Pin gelöscht");
+function deletePassword() {
+    localStorage.setItem('password', JSON.stringify(""));
+    document.getElementById('delete-password-button').textContent = 'Kein Passwort';
+    password = "";
+    console.log("Passwort gelöscht");
 }
 
 function closeSettings() {

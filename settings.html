@@ -11,12 +11,7 @@
 
 <body>
     <h1 id="headline">Allgemeine Einstellungen</h1>
-    <div id="pin-form" style="display: none;">
-        <label for="entered-pin">Bitte Pin Eingeben:</label>
-        <input type="password" id="entered-pin" />
-        <button onclick="validatePin()">Eingeben</button>
-    </div>
-    <div class="settings-container" id="settings-page" style="display: none;">
+    <div class="settings-container" id="settings-page">
         <ul class="settings-list">
             <li>
                 <span>Vollständiger Vereinsname</span>
@@ -24,13 +19,13 @@
                 <button id="enter-verein-button" onclick="submitVereinsName()">Aktualisieren</button>
             </li>
             <li>
-                <span>Pin festlegen (optional)</span>
-                <input type="text" id="pin" placeholder="Pin">
-                <button id="enter-pin-button" onclick="submitPin()">Aktualisieren</button>
+                <span>Passwort festlegen (optional)</span>
+                <input type="text" id="password" placeholder="Passwort">
+                <button id="enter-password-button" onclick="submitPassword()">Aktualisieren</button>
             </li>
             <li>
-                <span>Pin Löschen</span>
-                <button id="delete-pin-button" onclick="deletePin()">Löschen</button>
+                <span>Passwort löschen</span>
+                <button id="delete-password-button" onclick="deletePassword()">Löschen</button>
             </li>
         </ul>
         <div class="center">

@@ -6,7 +6,7 @@ let globalCodes = null;
 let globalList = null;
 let globalNameList = ["Herren", "Damen", "Jugend", "Bambini", "Senioren", "Seniorinnen"]
 let globalNameIndex = 0;
-let globalNumberList = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"]
+let globalNumberList = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", ""]
 let globalNumberIndex = 0;
 let verein = "FTT Hartmannshofen 1987";
 let pinsRead = false;
@@ -16,7 +16,7 @@ let listOfPins = [];
 let listOfCodes = [];
 let listOfNames = [];
 let listOfNumbers = [];
-let pin = "";
+let currentTeamIndex = -1;
 
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('listOfPins')) {
@@ -28,25 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('verein')) {
         verein = JSON.parse(localStorage.getItem('verein'));
         console.log(verein);
-    }
-    if (localStorage.getItem('pin')) {
-        console.log("I was here");
-        pin = JSON.parse(localStorage.getItem('pin'));
-        if (pin != '') {
-            console.log(pin);
-            document.getElementById('pin-form').style.display = 'block';
-        } else {
-            document.getElementById('add-team-page').style.display = 'block';
-        }
-    } else {
-        console.log("I was there");
-        const addTeamPage = document.getElementById('add-team-page');
-        console.log(addTeamPage); 
-        if (addTeamPage) {
-            addTeamPage.style.display = 'block';
-        } else {
-            console.log("add-team-page element is not found");
-        }
     }
 });
 
@@ -72,10 +53,11 @@ async function readPins(pdfFile) {
                         dates.push(contentList[j]);
                         if (contentList[j+4].includes(verein)) {
                             heim.push(true);
+                            gegner.push(content.items.map(item => item.str)[j+6]);
                         } else {
                             heim.push(false);
+                            gegner.push(content.items.map(item => item.str)[j+4]);
                         }
-                        gegner.push(content.items.map(item => item.str)[j+6]);
                         pins.push(content.items.map(item => item.str)[j+8]);
                     }
                 }
@@ -148,14 +130,6 @@ document.getElementById('uploadPins').addEventListener('change', function() {
         customFileButton.style.backgroundColor = '#007BFF'; // Reset color
     }
 });
-
-function printPinsAndCodes() {
-    if (pinsRead && codesRead && nameEntered) {
-        console.log(globalPins);
-        console.log(globalCodes);
-        console.log(globalName);
-    }
-}
 
 function increaseMannschaftsName() {
     globalNameIndex +=1;
@@ -251,33 +225,56 @@ function removeSpielPins() {
     customFileButton.style.backgroundColor = '#007BFF'; 
 }
 
+function teamExists(list1, list2, var1, var2) {
+    let indices1 = new Set(list1.map((x, i) => x === var1 ? i : -1).filter(i => i !== -1));
+    
+    for (let i = 0; i < list2.length; i++) {
+        if (list2[i] === var2 && indices1.has(i)) {
+            return i; // Return the first matching index
+        }
+    }
+    
+    return -1; // No common index found
+}
+
 function addTeam() {
     if (pinsRead && codesRead) {
-        listOfPins.push(globalPins);
-        listOfCodes.push(globalCodes);
-        listOfNames.push(globalNameIndex);
-        listOfNumbers.push(globalNumberIndex);
-        localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
-        localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
-        localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
-        localStorage.setItem('listOfNumbers', JSON.stringify(listOfNumbers));
-        console.log("Mannschaft wurde hinzugefügt");
-        window.location.href = "index.html";
+        currentTeamIndex = teamExists(listOfNames, listOfNumbers, globalNameIndex, globalNumberIndex);
+        if (currentTeamIndex == -1) {
+            listOfPins.push(globalPins);
+            listOfCodes.push(globalCodes);
+            listOfNames.push(globalNameIndex);
+            listOfNumbers.push(globalNumberIndex);
+            localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
+            localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
+            localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+            localStorage.setItem('listOfNumbers', JSON.stringify(listOfNumbers));
+            console.log("Mannschaft wurde hinzugefügt");
+            window.location.href = "index.html";
+        } else {
+            document.getElementById('verificationModalEdit').style.display = 'flex';
+        }
 
     } else {
         console.log("PDFs noch nicht vollständig");
     }
 }
 
-function validatePin() {
-    enteredPin = document.getElementById('entered-pin');
-    if (enteredPin.value.trim() == pin) {
-        document.getElementById('pin-form').style.display = 'none';
-        document.getElementById('add-team-page').style.display = 'block';
-    } else {
-        const label = document.querySelector('label[for="entered-pin"]');
-        label.textContent = "Falsche Pin, bitte erneut versuchen";
-    }
+function backToEdit() {
+    document.getElementById('verificationModalEdit').style.display = 'none';
+}
+
+function updateTeam() {
+    listOfPins[currentTeamIndex] = globalPins;
+    listOfCodes[currentTeamIndex] = globalCodes;
+    listOfNames[currentTeamIndex] = globalNameIndex;
+    listOfNumbers[currentTeamIndex] = globalNumberIndex;
+    localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
+    localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
+    localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+    localStorage.setItem('listOfNumbers', JSON.stringify(listOfNumbers));
+    console.log("Mannschaft wurde aktualisiert");
+    window.location.href = "index.html";
 }
 
 function closeSettings() {

@@ -11,12 +11,7 @@
 
 <body>
     <h1 id="headline">Mannschaft hinzufügen</h1>
-    <div id="pin-form" style="display: none;">
-        <label for="entered-pin">Bitte Pin Eingeben:</label>
-        <input type="password" id="entered-pin" />
-        <button onclick="validatePin()">Eingeben</button>
-    </div>
-    <div class="settings-container" id="add-team-page" style="display: none;">
+    <div class="settings-container" id="add-team-page">
         <ul class="settings-list">
             <li>
                 <span>Mannschaftsname</span>
@@ -51,6 +46,15 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
-    <script src="scripts/addteam.js"></script>
+    <script src="scripts/edit.js"></script>
 </body>
+<div id="verificationModalEdit" class="modal">
+    <div class="modal-content">
+        <h2 id="verification-headline-edit">Mannschaft aktualisieren?</h2>
+        <div class="modal-buttons">
+            <button id="verificationModalEditAbbrechen" onclick="backToEdit()">Abbrechen</button>
+            <button id="verificationModalEditJa" onclick="updateTeam()">Aktualisieren</button>
+        </div>
+    </div>
+</div>
 </html>
