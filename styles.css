@@ -62,7 +62,8 @@ h1 {
 }
 
 .custom-file-button {
-    padding: 10px 20px;
+    max-width: 20%;
+    padding: 1em 2em;
     font-weight: normal;
     font-size: 1rem;
     color: white;
@@ -112,7 +113,7 @@ li {
 /* Styling the buttons */
 button {
     padding: 10px 20px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: white;
     background-color: #007BFF;
     border: none;
@@ -150,6 +151,11 @@ button:active {
     width: 15vw;
     height: 54px;
 }
+
+/* #number-back-button { */
+/*     width: 15vw; */
+/*     height: 54px; */
+/* } */
 
 #back-button {
     position: absolute;
