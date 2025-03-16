@@ -40,8 +40,8 @@ function addCodeButton(buttonsContainer, gegner, date, link = null, heimspiel = 
     let baseUrl = "https://ttde-apps.liga.nu/nuliga/nuscore-tt/meetings-list?gamecode=";
     buttonText = `${gegner}<br>${date}`
     button.innerHTML = buttonText;
-    if (heimspiel == false){
-        button.style.backgroundColor = "#28a745";
+    if (heimspiel == true){
+        button.style.backgroundColor = "#6dbf85";
     }
     if (link) {
         button.onclick = function() {
@@ -59,8 +59,8 @@ function addPinButton(buttonsContainer, text, heimspiel = false) {
     const button = document.createElement("button");
     let baseUrl = "https://ttde-apps.liga.nu/nuliga/nuscore-tt/meetings-list?gamecode=";
     button.innerHTML = text;
-    if (heimspiel == false){
-        button.style.backgroundColor = "#28a745";
+    if (heimspiel == true){
+        button.style.backgroundColor = "#6dbf85";
     }
     button.onclick = function() {
         copyText(text);
