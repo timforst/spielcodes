@@ -63,9 +63,10 @@ h1 {
 
 .custom-file-button {
     max-width: 20%;
-    padding: 1em 2em;
+    padding: 0.5em 1em;
     font-weight: normal;
-    font-size: 1rem;
+    font-size: clamp(14px, 4vw, 32px);
+    /* font-size: 1rem; */
     color: white;
     background-color: #007BFF;
     border: none;
@@ -85,7 +86,8 @@ ul {
 li {
     display: flex;
     align-items: center;
-    font-size: 1rem;
+    /* font-size: 1rem; */
+    font-size: clamp(14px, 4vw, 32px);
     /* font-size: 32px; */
     justify-content: space-between;
     background-color: #f9f9f9; /* Light background color */
