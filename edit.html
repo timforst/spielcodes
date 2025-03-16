@@ -14,8 +14,8 @@
     <div class="settings-container" id="add-team-page">
         <ul class="settings-list">
             <li>
-                <span>Mannschaftsname</span>
-                <select id="name-button">
+                <span>Altersklasse</span>
+                <select id="name-selection">
                     <option value="Herren" selected="selected">Herren</option>
                     <option value="Damen">Damen</option>
                     <option value="Jugend">Jugend</option>
@@ -23,36 +23,37 @@
                     <option value="Senioren">Senioren</option>
                     <option value="Seniorinnen">Seniorinnen</option>
                 </select>
-                <!-- <button id="name-back-button" onclick="decreaseMannschaftsName()">&larr;</button> -->
-                <!-- <button id="name-button">Herren</button> -->
-                <!-- <button id="name-forward-button" onclick="increaseMannschaftsName()">&rarr;</button> -->
             </li>
             <li>
                 <span>Nummer</span>
-                <select id="number-button">
+                <select id="number-selection">
                     <option value=""></option>
                     <option value="I" selected="selected">I</option>
                     <option value="II">II</option>
                     <option value="III">III</option>
                     <option value="IV">IV</option>
+                    <option value="V">V</option>
+                    <option value="VI">VI</option>
+                    <option value="VII">VII</option>
+                    <option value="VIII">VIII</option>
+                    <option value="IX">IX</option>
+                    <option value="X">X</option>
+                    <option value="XI">XI</option>
+                    <option value="XII">XII</option>
+                    <option value="XIII">XIII</option>
+                    <option value="XIV">XIV</option>
+                    <option value="XV">XV</option>
                 </select>
-                <!-- <button id="number-back-button" onclick="decreaseMannschaftsNumber()">&larr;</button> -->
-                <!-- <button id="number-button">I</button> -->
-                <!-- <button id="number-forward-button" onclick="increaseMannschaftsNumber()">&rarr;</button> -->
             </li>
             <li>
                 <span>Spielcodes</span>
                 <label for="uploadCodes" class="custom-file-button" id="spielcodes-button">Datei Auswählen</label>
                 <input type="file" id="uploadCodes" style=" display: none;" accept="application/pdf">
-                <button id="spielcodes-upload-button" onclick="processSpielCodes()">Upload</button>
-                <button id="remove-spielcodes-button" style=" display: none;" onclick="removeSpielCodes()">Entfernen</button>
             </li>
             <li>
                 <span>Spielpins</span>
                 <label for="uploadPins" class="custom-file-button" id="spielpins-button">Datei Auswählen</label>
                 <input type="file" id="uploadPins" style=" display: none;" accept="application/pdf">
-                <button id="spielpins-upload-button" onclick="processSpielPins()">Upload</button>
-                <button id="remove-spielpins-button" style=" display: none;" onclick="removeSpielPins()">Entfernen</button>
             </li>
         </ul>
         <div class="center">

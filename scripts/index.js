@@ -1,9 +1,6 @@
-let globalNameList = ["Herren", "Damen", "Jugend", "Bambini", "Senioren", "Seniorinnen"];
-let globalNumberList = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", ""];
 let listOfPins = [];
 let listOfCodes = [];
 let listOfNames = [];
-let listOfNumbers = [];
 let password = "";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         listOfPins = JSON.parse(localStorage.getItem('listOfPins'));
         listOfCodes = JSON.parse(localStorage.getItem('listOfCodes'));
         listOfNames = JSON.parse(localStorage.getItem('listOfNames'));
-        listOfNumbers = JSON.parse(localStorage.getItem('listOfNumbers'));
         loadInitialButtons();
     }
     if (localStorage.getItem('password')) {
@@ -24,7 +20,7 @@ function loadInitialButtons() {
     const container = document.getElementById("initial-buttons");
     for (let i = 0; i < listOfNames.length; i++) {
         const btn = document.createElement("button");
-        btn.textContent = `${globalNameList[listOfNames[i]]} ${globalNumberList[listOfNumbers[i]]}`;
+        btn.textContent = listOfNames[i];
         btn.onclick = () => location.href = `codes.html?team=${i}`;
         btn.onclick = (function(index) {
             return () => location.href = `codes.html?team=${index}`;

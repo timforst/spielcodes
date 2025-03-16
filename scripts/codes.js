@@ -1,12 +1,9 @@
-let globalNameList = ["Herren", "Damen", "Jugend", "Bambini", "Senioren", "Seniorinnen"]
-let globalNumberList = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", ""]
 let globalTeam = -1
 let dataList = null;
 let showingOld = false;
 let listOfPins = [];
 let listOfCodes = [];
 let listOfNames = [];
-let listOfNumbers = [];
 
 function getQueryParam(name) {
     const params = new URLSearchParams(window.location.search);
@@ -21,7 +18,6 @@ function getQueryParam(name) {
         listOfPins = JSON.parse(localStorage.getItem('listOfPins'));
         listOfCodes = JSON.parse(localStorage.getItem('listOfCodes'));
         listOfNames = JSON.parse(localStorage.getItem('listOfNames'));
-        listOfNumbers = JSON.parse(localStorage.getItem('listOfNumbers'));
         generateButtons(globalTeam, showOld = false)
     }
   });
@@ -97,7 +93,7 @@ function showPastGames(team) {
 
 function generateButtons(team, showOld = false) {
     console.log(team);
-    name = `${globalNameList[listOfNames[team]]} ${globalNumberList[listOfNumbers[team]]}`;
+    name = listOfNames[team];
     console.log(name);
     pins = listOfPins[team];
     // console.log(listOfPins);

@@ -4,10 +4,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs
 let globalPins = null;
 let globalCodes = null;
 let globalList = null;
-let globalNameList = ["Herren", "Damen", "Jugend", "Bambini", "Senioren", "Seniorinnen"]
-let globalNameIndex = 0;
-let globalNumberList = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", ""]
-let globalNumberIndex = 0;
+let globalName = "Herren I";
 let verein = "FTT Hartmannshofen 1987";
 let pinsRead = false;
 let codesRead = false;
@@ -104,6 +101,25 @@ async function readCodes(pdfFile) {
     });
 }
 
+document.getElementById('name-selection').addEventListener('change', function() {
+    const currentName = document.getElementById('name-selection');
+    const currentNumber = document.getElementById('number-selection');
+    if (currentNumber == "") {
+        globalName = currentName.value;
+    } else {
+        globalName = `${currentName.value} ${currentNumber.value}`;
+    }
+});
+
+document.getElementById('number-selection').addEventListener('change', function() {
+    const currentName = document.getElementById('name-selection');
+    const currentNumber = document.getElementById('number-selection');
+    if (currentNumber == "") {
+        globalName = currentName.value;
+    } else {
+        globalName = `${currentName.value} ${currentNumber.value}`;
+    }
+});
 
 document.getElementById('uploadCodes').addEventListener('change', function() {
     const uploadCodes= document.getElementById('uploadCodes');
@@ -111,10 +127,11 @@ document.getElementById('uploadCodes').addEventListener('change', function() {
 
     if (uploadCodes.files.length > 0) {
         customFileButton.textContent = uploadCodes.files[0].name;
-        customFileButton.style.backgroundColor = '#28A745';  // Change color to indicate success
+        let file = uploadCodes.files[0];
+        processSpielCodes(file);
+        customFileButton.style.color = '#000';
     } else {
-        customFileButton.textContent = 'Datei Auswählen';  // Reset text if no file is selected
-        customFileButton.style.backgroundColor = '#007BFF'; // Reset color
+        customFileButton.textContent = 'Datei Auswählen';
     }
 });
 
@@ -124,135 +141,43 @@ document.getElementById('uploadPins').addEventListener('change', function() {
 
     if (uploadPins.files.length > 0) {
         customFileButton.textContent = uploadPins.files[0].name;
-        customFileButton.style.backgroundColor = '#28A745';  // Change color to indicate success
+        let file = uploadPins.files[0];
+        processSpielPins(file);
+        customFileButton.style.color = '#000';
     } else {
-        customFileButton.textContent = 'Datei Auswählen';  // Reset text if no file is selected
-        customFileButton.style.backgroundColor = '#007BFF'; // Reset color
+        customFileButton.textContent = 'Datei Auswählen';
     }
 });
 
-function increaseMannschaftsName() {
-    globalNameIndex +=1;
-    if (globalNameIndex == globalNameList.length) {
-        globalNameIndex = 0;
-    }
-    document.getElementById("name-button").textContent = globalNameList[globalNameIndex];
+function processSpielCodes(file) {
+    readCodes(file).then(data => {
+        globalCodes = data;
+        codesRead = true;
+        console.log("Upload: ", globalCodes);
+    });
 }
 
-function decreaseMannschaftsName() {
-    globalNameIndex -=1;
-    if (globalNameIndex == -1) {
-        globalNameIndex = globalNameList.length - 1;
-    }
-    document.getElementById("name-button").textContent = globalNameList[globalNameIndex];
-}
-
-function increaseMannschaftsNumber() {
-    globalNumberIndex +=1;
-    if (globalNumberIndex == globalNumberList.length) {
-        globalNumberIndex = 0;
-    }
-    document.getElementById("number-button").textContent = globalNumberList[globalNumberIndex];
-}
-
-function decreaseMannschaftsNumber() {
-    globalNumberIndex -=1;
-    if (globalNumberIndex == -1) {
-        globalNumberIndex = globalNumberList.length - 1;
-    }
-    document.getElementById("number-button").textContent = globalNumberList[globalNumberIndex];
-}
-
-function processSpielCodes() {
-    const uploadCodes = document.getElementById('uploadCodes');
-    const file = uploadCodes.files[0];
-    if (file) {
-        readCodes(file).then(data => {
-            globalCodes = data;
-            codesRead = true;
-            console.log("Upload: ", globalCodes);
-            document.getElementById('remove-spielcodes-button').style.display = 'block';
-            document.getElementById('spielcodes-upload-button').style.display = 'none';
-            document.getElementById('spielcodes-button').style.display = 'none';
-        }).catch(error => {
-            console.error("Error extracting data:", error);
-        });
-    }
-}
-
-function removeSpielCodes() {
-    globalCodes = null;
-    codesRead = false;
-    // localStorage.removeItem('csvData');
-    document.getElementById('remove-spielcodes-button').style.display = 'none';
-    document.getElementById('spielcodes-upload-button').style.display = 'block';
-    document.getElementById('spielcodes-button').style.display = 'block';
-    const uploadCodes = document.getElementById('uploadCodes');
-    uploadCodes.value = '';
-    const customFileButton = document.getElementById('spielcodes-button');
-    customFileButton.textContent = 'Datei Auswählen';
-    customFileButton.style.backgroundColor = '#007BFF'; 
-}
-
-function processSpielPins() {
-    const uploadPins = document.getElementById('uploadPins');
-    const file = uploadPins.files[0];
-    if (file) {
-        readPins(file).then(data => {
-            globalPins = data;
-            pinsRead = true;
-            console.log("Upload: ", globalPins);
-            document.getElementById('remove-spielpins-button').style.display = 'block';
-            document.getElementById('spielpins-upload-button').style.display = 'none';
-            document.getElementById('spielpins-button').style.display = 'none';
-        }).catch(error => {
-            console.error("Error extracting data:", error);
-        });
-    }
-}
-
-function removeSpielPins() {
-    globalPins = null;
-    pinsRead = false;
-    // localStorage.removeItem('csvData');
-    document.getElementById('remove-spielpins-button').style.display = 'none';
-    document.getElementById('spielpins-upload-button').style.display = 'block';
-    document.getElementById('spielpins-button').style.display = 'block';
-    const uploadPins = document.getElementById('uploadPins');
-    uploadPins.value = '';
-    const customFileButton = document.getElementById('spielpins-button');
-    customFileButton.textContent = 'Datei Auswählen';
-    customFileButton.style.backgroundColor = '#007BFF'; 
-}
-
-function teamExists(list1, list2, var1, var2) {
-    let indices1 = new Set(list1.map((x, i) => x === var1 ? i : -1).filter(i => i !== -1));
-    
-    for (let i = 0; i < list2.length; i++) {
-        if (list2[i] === var2 && indices1.has(i)) {
-            return i; // Return the first matching index
-        }
-    }
-    
-    return -1; // No common index found
+function processSpielPins(file) {
+    readPins(file).then(data => {
+        globalPins = data;
+        pinsRead = true;
+        console.log("Upload: ", globalPins);
+    });
 }
 
 function addTeam() {
     if (pinsRead && codesRead) {
-        currentTeamIndex = teamExists(listOfNames, listOfNumbers, globalNameIndex, globalNumberIndex);
-        if (currentTeamIndex == -1) {
+        if (listOfNames.includes(globalName)) {
+            document.getElementById('verificationModalEdit').style.display = 'flex';
+        } else {
             listOfPins.push(globalPins);
             listOfCodes.push(globalCodes);
-            listOfNames.push(globalNameIndex);
-            listOfNumbers.push(globalNumberIndex);
+            listOfNames.push(globalName);
             localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
             localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
             localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
-            localStorage.setItem('listOfNumbers', JSON.stringify(listOfNumbers));
             console.log("Mannschaft wurde hinzugefügt");
             window.location.href = "index.html";
-        } else {
-            document.getElementById('verificationModalEdit').style.display = 'flex';
         }
 
     } else {

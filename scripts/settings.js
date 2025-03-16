@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         document.getElementById('delete-password-button').textContent = 'Kein Passwort';
     }
+    if (localStorage.getItem('listOfNames')) {
+        document.getElementById('delete-teams-button').textContent = 'Löschen';
+    } else {
+        document.getElementById('delete-teams-button').textContent = 'Gelöscht';
+    }
 });
 
 function submitVereinsName() {
@@ -38,6 +43,13 @@ function deletePassword() {
     document.getElementById('delete-password-button').textContent = 'Kein Passwort';
     password = "";
     console.log("Passwort gelöscht");
+}
+
+function deleteTeams() {
+    localStorage.removeItem('listOfNames');
+    localStorage.removeItem('listOfCodes');
+    localStorage.removeItem('listOfPins');
+    document.getElementById('delete-teams-button').textContent = 'Gelöscht';
 }
 
 function closeSettings() {
