@@ -14,13 +14,14 @@ let listOfCodes = [];
 let listOfNames = [];
 let listOfNumbers = [];
 let currentTeamIndex = -1;
+let indexToDelete = -1;
 
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('listOfPins')) {
         listOfPins = JSON.parse(localStorage.getItem('listOfPins'));
         listOfCodes = JSON.parse(localStorage.getItem('listOfCodes'));
         listOfNames = JSON.parse(localStorage.getItem('listOfNames'));
-        listOfNumbers = JSON.parse(localStorage.getItem('listOfNumbers'));
+        createTeamsList();
     }
     if (localStorage.getItem('verein')) {
         verein = JSON.parse(localStorage.getItem('verein'));
@@ -28,6 +29,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function createTeamsList() {
+    const teamsList = document.getElementById("teams-list");
+    teamsList.innerHTML = '';
+    for (i=0; i < listOfNames.length; i++) {
+        const row = document.createElement('li');
+        row.appendChild(document.createTextNode(listOfNames[i]));
+        const renameButton = document.createElement('button');
+        renameButton.textContent = '⚙︎';
+        renameButton.classList.add('renameButton');
+        renameButton.addEventListener('click', (function(index) {
+            return () => {
+                document.getElementById("editTeamModal").style.display = 'flex';
+                document.getElementById("verification-headline-edit-team").textContent = `${listOfNames[index]} bearbeiten`;
+                document.getElementById("name-selection-edit").value = splitString(listOfNames[index])[0];
+                document.getElementById("number-selection-edit").value = splitString(listOfNames[index])[1];
+                indexToEdit = index;
+            };
+        })(i));
+        row.appendChild(renameButton);
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '🗑️';
+        deleteButton.classList.add('deleteButton');
+        deleteButton.addEventListener('click', (function(index) {
+            return () => {
+                document.getElementById("verificationModalDeleteTeam").style.display = 'flex';
+                document.getElementById("verification-headline-delete-team").textContent = `${listOfNames[index]} löschen?`;
+                indexToDelete = index;
+            };
+        })(i));
+        row.appendChild(deleteButton);
+        teamsList.appendChild(row);
+    }
+}
+
+function splitString(str) {
+    const words = str.split(' ');
+    
+    if (words.length === 1) {
+        return [words[0], '']; // No second word, return first word and an empty string
+    } else {
+        return words; // Two words, return them as an array
+    }
+}
+
+
+function deleteTeam() {
+    listOfPins.splice(indexToDelete, 1);
+    listOfCodes.splice(indexToDelete, 1);
+    listOfNames.splice(indexToDelete, 1);
+    localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
+    localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
+    localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+    createTeamsList();
+    document.getElementById('verificationModalDeleteTeam').style.display = 'none';
+}
 
 async function readPins(pdfFile) {
     const reader = new FileReader();
@@ -101,53 +157,53 @@ async function readCodes(pdfFile) {
     });
 }
 
-document.getElementById('name-selection').addEventListener('change', function() {
-    const currentName = document.getElementById('name-selection');
-    const currentNumber = document.getElementById('number-selection');
-    if (currentNumber == "") {
+document.getElementById('name-selection-edit').addEventListener('change', function() {
+    const currentName = document.getElementById('name-selection-edit');
+    const currentNumber = document.getElementById('number-selection-edit');
+    if (currentNumber.value == "") {
         globalName = currentName.value;
     } else {
         globalName = `${currentName.value} ${currentNumber.value}`;
     }
 });
 
-document.getElementById('number-selection').addEventListener('change', function() {
-    const currentName = document.getElementById('name-selection');
-    const currentNumber = document.getElementById('number-selection');
-    if (currentNumber == "") {
+document.getElementById('number-selection-edit').addEventListener('change', function() {
+    const currentName = document.getElementById('name-selection-edit');
+    const currentNumber = document.getElementById('number-selection-edit');
+    if (currentNumber.value == "") {
         globalName = currentName.value;
     } else {
         globalName = `${currentName.value} ${currentNumber.value}`;
     }
 });
 
-document.getElementById('uploadCodes').addEventListener('change', function() {
-    const uploadCodes= document.getElementById('uploadCodes');
-    const customFileButton = document.getElementById('spielcodes-button');
+// document.getElementById('uploadCodes').addEventListener('change', function() {
+//     const uploadCodes= document.getElementById('uploadCodes');
+//     const customFileButton = document.getElementById('spielcodes-button');
 
-    if (uploadCodes.files.length > 0) {
-        customFileButton.textContent = uploadCodes.files[0].name;
-        let file = uploadCodes.files[0];
-        processSpielCodes(file);
-        customFileButton.style.color = '#000';
-    } else {
-        customFileButton.textContent = 'Datei Auswählen';
-    }
-});
+//     if (uploadCodes.files.length > 0) {
+//         customFileButton.textContent = uploadCodes.files[0].name;
+//         let file = uploadCodes.files[0];
+//         processSpielCodes(file);
+//         customFileButton.style.color = '#000';
+//     } else {
+//         customFileButton.textContent = 'Datei Auswählen';
+//     }
+// });
 
-document.getElementById('uploadPins').addEventListener('change', function() {
-    const uploadPins= document.getElementById('uploadPins');
-    const customFileButton = document.getElementById('spielpins-button');
+// document.getElementById('uploadPins').addEventListener('change', function() {
+//     const uploadPins= document.getElementById('uploadPins');
+//     const customFileButton = document.getElementById('spielpins-button');
 
-    if (uploadPins.files.length > 0) {
-        customFileButton.textContent = uploadPins.files[0].name;
-        let file = uploadPins.files[0];
-        processSpielPins(file);
-        customFileButton.style.color = '#000';
-    } else {
-        customFileButton.textContent = 'Datei Auswählen';
-    }
-});
+//     if (uploadPins.files.length > 0) {
+//         customFileButton.textContent = uploadPins.files[0].name;
+//         let file = uploadPins.files[0];
+//         processSpielPins(file);
+//         customFileButton.style.color = '#000';
+//     } else {
+//         customFileButton.textContent = 'Datei Auswählen';
+//     }
+// });
 
 function processSpielCodes(file) {
     readCodes(file).then(data => {
@@ -165,41 +221,52 @@ function processSpielPins(file) {
     });
 }
 
-function addTeam() {
-    if (pinsRead && codesRead) {
-        if (listOfNames.includes(globalName)) {
-            document.getElementById('verificationModalEdit').style.display = 'flex';
-        } else {
-            listOfPins.push(globalPins);
-            listOfCodes.push(globalCodes);
-            listOfNames.push(globalName);
-            localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
-            localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
-            localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
-            console.log("Mannschaft wurde hinzugefügt");
-            window.location.href = "index.html";
-        }
+// function addTeam() {
+//     if (pinsRead && codesRead) {
+//         if (listOfNames.includes(globalName)) {
+//             document.getElementById('verificationModalEdit').style.display = 'flex';
+//         } else {
+//             listOfPins.push(globalPins);
+//             listOfCodes.push(globalCodes);
+//             listOfNames.push(globalName);
+//             localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
+//             localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
+//             localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+//             console.log("Mannschaft wurde hinzugefügt");
+//             window.location.href = "index.html";
+//         }
 
-    } else {
-        console.log("PDFs noch nicht vollständig");
-    }
-}
+//     } else {
+//         console.log("PDFs noch nicht vollständig");
+//     }
+// }
 
 function backToEdit() {
-    document.getElementById('verificationModalEdit').style.display = 'none';
+    document.getElementById('verificationModalDeleteTeam').style.display = 'none';
+    document.getElementById('editTeamModal').style.display = 'none';
 }
 
-function updateTeam() {
-    listOfPins[currentTeamIndex] = globalPins;
-    listOfCodes[currentTeamIndex] = globalCodes;
-    listOfNames[currentTeamIndex] = globalNameIndex;
-    listOfNumbers[currentTeamIndex] = globalNumberIndex;
-    localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
-    localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
-    localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
-    localStorage.setItem('listOfNumbers', JSON.stringify(listOfNumbers));
-    console.log("Mannschaft wurde aktualisiert");
-    window.location.href = "index.html";
+function editTeam() {
+    if (globalPins && globalCodes) {
+        listOfPins[indexToEdit] = globalPins;
+        listOfCodes[indexToEdit] = globalCodes;
+        listOfNames[indexToEdit] = globalName;
+        localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
+        localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
+        localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+        console.log("Mannschaft wurde aktualisiert");
+        document.getElementById("editTeamModal").style.display = 'none';
+        createTeamsList();
+    } else if (!globalPins && !globalCodes) {
+        console.log(listOfNames);
+        listOfNames[indexToEdit] = globalName;
+        localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
+        console.log("Name wurde aktualisiert");
+        console.log(listOfNames);
+        document.getElementById("editTeamModal").style.display = 'none';
+        createTeamsList();
+    }
+
 }
 
 function closeSettings() {

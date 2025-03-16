@@ -41,6 +41,15 @@ passwordInputField.addEventListener('keydown', function(event) {
     }
 });
 
+function backToEdit() {
+    document.getElementById('verificationModalDeleteAll').style.display = 'none';
+}
+
+function openVerificationModal() {
+    document.getElementById('verificationModalDeleteAll').style.display = 'flex';
+}
+
+
 function submitPassword() {
     const tempPassword = document.getElementById('password');
     const realPassword = tempPassword.value.trim();
@@ -64,6 +73,7 @@ function deleteTeams() {
     localStorage.removeItem('listOfCodes');
     localStorage.removeItem('listOfPins');
     document.getElementById('delete-teams-button').textContent = 'Gelöscht';
+    document.getElementById('verificationModalDeleteAll').style.display = 'none';
 }
 
 function closeSettings() {

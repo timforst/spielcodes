@@ -28,7 +28,7 @@
                 </li>
                 <li>
                     <span>Teams löschen</span>
-                    <button id="delete-teams-button" onclick="deleteTeams()">Löschen</button>
+                    <button id="delete-teams-button" onclick="openVerificationModal()">Löschen</button>
                 </li>
             </ul>
             <div class="center">
@@ -39,4 +39,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
     <script src="scripts/settings.js"></script>
 </body>
+<div id="verificationModalDeleteAll" class="modal">
+    <div class="modal-content">
+        <h2 id="verification-headline-delete-all">Alle Mannschaften löschen?</h2>
+        <div class="modal-buttons">
+            <button id="verificationModalDeleteAllAbbrechen" onclick="backToEdit()">Abbrechen</button>
+            <button id="verificationModalDeleteAllJa" onclick="deleteTeams()">Löschen</button>
+        </div>
+    </div>
+</div>
 </html>

@@ -21,7 +21,6 @@ function loadInitialButtons() {
     for (let i = 0; i < listOfNames.length; i++) {
         const btn = document.createElement("button");
         btn.textContent = listOfNames[i];
-        btn.onclick = () => location.href = `codes.html?team=${i}`;
         btn.onclick = (function(index) {
             return () => location.href = `codes.html?team=${index}`;
         })(i);
