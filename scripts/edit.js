@@ -34,7 +34,9 @@ function createTeamsList() {
     teamsList.innerHTML = '';
     for (i=0; i < listOfNames.length; i++) {
         const row = document.createElement('li');
-        row.appendChild(document.createTextNode(listOfNames[i]));
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = listOfNames[i];
+        row.appendChild(nameSpan);
         const renameButton = document.createElement('button');
         renameButton.textContent = '⚙︎';
         renameButton.classList.add('renameButton');
@@ -67,9 +69,9 @@ function splitString(str) {
     const words = str.split(' ');
     
     if (words.length === 1) {
-        return [words[0], '']; // No second word, return first word and an empty string
+        return [words[0], ''];
     } else {
-        return words; // Two words, return them as an array
+        return words;
     }
 }
 
