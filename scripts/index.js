@@ -36,6 +36,13 @@ function passwordToSettings() {
             element.classList.add("blur");
         });
         passwordInputSettings.focus();
+        const passwordSettingsInputField = document.getElementById("passwordInputSettings");
+        passwordSettingsInputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                console.log("Enter");
+                validatePasswordSettings();
+            }
+        });
     } else {
         window.location.href = 'settings.html';
     }
@@ -48,6 +55,13 @@ function passwordToEdit() {
             element.classList.add("blur");
         });
         passwordInputEdit.focus();
+        const passwordEditInputField = document.getElementById("passwordInputEdit");
+        passwordEditInputField.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                console.log("Enter");
+                validatePasswordEdit();
+            }
+        });
     } else {
         window.location.href = 'edit.html';
     }
@@ -61,10 +75,15 @@ function backToMain() {
     });
 }
 
+
 function validatePasswordSettings() {
     enteredPassword = document.getElementById('passwordInputSettings');
     if (enteredPassword.value.trim() == password) {
         window.location.href = 'settings.html';
+        passwordModalSettings.style.display = 'none';
+        document.querySelectorAll("body > *").forEach(element => {
+            element.classList.remove("blur");
+        });
     } else {
         passwordHeadline = document.getElementById('password-headline-settings');
         passwordHeadline.textContent = "Erneut Versuchen";
@@ -75,6 +94,10 @@ function validatePasswordEdit() {
     enteredPassword = document.getElementById('passwordInputEdit');
     if (enteredPassword.value.trim() == password) {
         window.location.href = 'edit.html';
+        passwordModalEdit.style.display = 'none';
+        document.querySelectorAll("body > *").forEach(element => {
+            element.classList.remove("blur");
+        });
     } else {
         passwordHeadline = document.getElementById('password-headline-edit');
         passwordHeadline.textContent = "Erneut Versuchen";

@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+const vereinInputField = document.getElementById("verein");
+vereinInputField.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        submitVereinsName();
+    }
+});
+
 function submitVereinsName() {
     const vereinsName = document.getElementById('verein');
     const name = vereinsName.value.trim();
@@ -26,6 +33,13 @@ function submitVereinsName() {
         vereinsName.value = '';
     }
 }
+
+const passwordInputField = document.getElementById("password");
+passwordInputField.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        submitPassword();
+    }
+});
 
 function submitPassword() {
     const tempPassword = document.getElementById('password');
