@@ -153,7 +153,7 @@ button:active {
 
 #number-selection {
     appearance: none; /* Remove default OS styles */
-    width: 30vw; /* Adjust width as needed */
+    width: 30vw;
     /* height: clamp(32px, 5vh, 64px); */
     height: 54px;
     font-size: clamp(14px, 4vw, 32px);
@@ -241,6 +241,7 @@ button:active {
     border: 2px solid black;
     border-radius: 5px;
     padding-left: 10px;
+    width: 20vw;
 }
 
 #password {
@@ -248,6 +249,7 @@ button:active {
     border: 2px solid black;
     border-radius: 5px;
     padding-left: 10px;
+    width: 20vw;
 }
 
 .modal {
