@@ -144,15 +144,48 @@ button:active {
     transition: background-color 0.3s;
 }
 
-#name-button {
-    width: 15vw;
-    height: 54px;
+#number-button {
+    appearance: none; /* Remove default OS styles */
+    width: 15vw; /* Adjust width as needed */
+    height: clamp(32px, 5vh, 64px);
+    font-size: clamp(14px, 4vw, 32px);
+    text-align: center;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-#number-button {
-    width: 15vw;
-    height: 54px;
+#number-button option {
+    text-align: center;
 }
+
+#name-button {
+    appearance: none; /* Remove default OS styles */
+    width: 15vw; /* Adjust width as needed */
+    height: clamp(32px, 5vh, 64px);
+    font-size: clamp(14px, 4vw, 32px);
+    text-align-last: center;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#name-button option {
+    text-align: center;
+}
+/* #name-button { */
+/*     width: 15vw; */
+/*     font-size: clamp(14px, 4vw, 32px); */
+/*     height: clamp(32px, 5vh, 64px); */
+/* } */
+
+/* #number-button { */
+/*     width: 15vw; */
+/*     font-size: clamp(14px, 4vw, 32px); */
+/*     height: clamp(32px, 5vh, 64px); */
+/* } */
 
 /* #number-back-button { */
 /*     width: 15vw; */
