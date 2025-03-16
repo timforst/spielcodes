@@ -11,54 +11,56 @@
 
 <body>
     <h1 id="headline">Mannschaft hinzufügen</h1>
-    <div class="settings-container" id="add-team-page">
-        <ul class="settings-list">
-            <li>
-                <span>Altersklasse</span>
-                <select id="name-selection">
-                    <option value="Herren" selected="selected">Herren</option>
-                    <option value="Damen">Damen</option>
-                    <option value="Jugend">Jugend</option>
-                    <option value="Bambini">Bambini</option>
-                    <option value="Senioren">Senioren</option>
-                    <option value="Seniorinnen">Seniorinnen</option>
-                </select>
-            </li>
-            <li>
-                <span>Nummer</span>
-                <select id="number-selection">
-                    <option value=""></option>
-                    <option value="I" selected="selected">I</option>
-                    <option value="II">II</option>
-                    <option value="III">III</option>
-                    <option value="IV">IV</option>
-                    <option value="V">V</option>
-                    <option value="VI">VI</option>
-                    <option value="VII">VII</option>
-                    <option value="VIII">VIII</option>
-                    <option value="IX">IX</option>
-                    <option value="X">X</option>
-                    <option value="XI">XI</option>
-                    <option value="XII">XII</option>
-                    <option value="XIII">XIII</option>
-                    <option value="XIV">XIV</option>
-                    <option value="XV">XV</option>
-                </select>
-            </li>
-            <li>
-                <span>Spielcodes</span>
-                <label for="uploadCodes" class="custom-file-button" id="spielcodes-button">Datei Auswählen</label>
-                <input type="file" id="uploadCodes" style=" display: none;" accept="application/pdf">
-            </li>
-            <li>
-                <span>Spielpins</span>
-                <label for="uploadPins" class="custom-file-button" id="spielpins-button">Datei Auswählen</label>
-                <input type="file" id="uploadPins" style=" display: none;" accept="application/pdf">
-            </li>
-        </ul>
-        <div class="center">
-            <button onclick="closeSettings()">Abbrechen</button>
-            <button onclick="addTeam()">Mannschaft hinzufügen</button>
+    <div class="container">
+        <div class="settings-container" id="add-team-page">
+            <ul class="settings-list">
+                <li>
+                    <span>Altersklasse</span>
+                    <select id="name-selection">
+                        <option value="Herren" selected="selected">Herren</option>
+                        <option value="Damen">Damen</option>
+                        <option value="Jugend">Jugend</option>
+                        <option value="Bambini">Bambini</option>
+                        <option value="Senioren">Senioren</option>
+                        <option value="Seniorinnen">Seniorinnen</option>
+                    </select>
+                </li>
+                <li>
+                    <span>Nummer</span>
+                    <select id="number-selection">
+                        <option value=""></option>
+                        <option value="I" selected="selected">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="V">V</option>
+                        <option value="VI">VI</option>
+                        <option value="VII">VII</option>
+                        <option value="VIII">VIII</option>
+                        <option value="IX">IX</option>
+                        <option value="X">X</option>
+                        <option value="XI">XI</option>
+                        <option value="XII">XII</option>
+                        <option value="XIII">XIII</option>
+                        <option value="XIV">XIV</option>
+                        <option value="XV">XV</option>
+                    </select>
+                </li>
+                <li>
+                    <span>Spielcodes</span>
+                    <label for="uploadCodes" class="custom-file-button" id="spielcodes-button">Datei Auswählen</label>
+                    <input type="file" id="uploadCodes" style=" display: none;" accept="application/pdf">
+                </li>
+                <li>
+                    <span>Spielpins</span>
+                    <label for="uploadPins" class="custom-file-button" id="spielpins-button">Datei Auswählen</label>
+                    <input type="file" id="uploadPins" style=" display: none;" accept="application/pdf">
+                </li>
+            </ul>
+            <div class="center">
+                <button onclick="closeSettings()">Abbrechen</button>
+                <button onclick="addTeam()">Mannschaft hinzufügen</button>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>

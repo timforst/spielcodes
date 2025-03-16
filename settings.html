@@ -10,30 +10,32 @@
 
 
 <body>
-    <h1 id="headline">Allgemeine Einstellungen</h1>
-    <div class="settings-container" id="settings-page">
-        <ul class="settings-list">
-            <li>
-                <span>Vollständiger Vereinsname</span>
-                <input type="text" id="verein" placeholder="Vereinsname">
-                <button id="enter-verein-button" onclick="submitVereinsName()">Aktualisieren</button>
-            </li>
-            <li>
-                <span>Passwort festlegen (optional)</span>
-                <input type="text" id="password" placeholder="Passwort">
-                <button id="enter-password-button" onclick="submitPassword()">Aktualisieren</button>
-            </li>
-            <li>
-                <span>Passwort löschen</span>
-                <button id="delete-password-button" onclick="deletePassword()">Löschen</button>
-            </li>
-            <li>
-                <span>Teams löschen</span>
-                <button id="delete-teams-button" onclick="deleteTeams()">Löschen</button>
-            </li>
-        </ul>
-        <div class="center">
-            <button onclick="closeSettings()">Zurück</button>
+    <h1 id="headline">Einstellungen</h1>
+    <div class="container">
+        <div class="settings-container" id="settings-page">
+            <ul class="settings-list">
+                <li>
+                    <span>Vollständiger Vereinsname</span>
+                    <input type="text" id="verein" placeholder="Vereinsname">
+                    <button id="enter-verein-button" onclick="submitVereinsName()">Aktualisieren</button>
+                </li>
+                <li>
+                    <span>Passwort festlegen (optional)</span>
+                    <input type="text" id="password" placeholder="Passwort">
+                    <button id="enter-password-button" onclick="submitPassword()">Aktualisieren</button>
+                </li>
+                <li>
+                    <span>Passwort löschen</span>
+                    <button id="delete-password-button" onclick="deletePassword()">Löschen</button>
+                </li>
+                <li>
+                    <span>Teams löschen</span>
+                    <button id="delete-teams-button" onclick="deleteTeams()">Löschen</button>
+                </li>
+            </ul>
+            <div class="center">
+                <button onclick="closeSettings()">Zurück</button>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.10.111/pdf.min.js"></script>
