@@ -46,6 +46,13 @@ function createTeamsList() {
                 document.getElementById("verification-headline-edit-team").textContent = `${listOfNames[index]} bearbeiten`;
                 document.getElementById("name-selection-edit").value = splitString(listOfNames[index])[0];
                 document.getElementById("number-selection-edit").value = splitString(listOfNames[index])[1];
+                const currentName = document.getElementById('name-selection-edit');
+                const currentNumber = document.getElementById('number-selection-edit');
+                if (currentNumber.value == "") {
+                    globalName = currentName.value;
+                } else {
+                    globalName = `${currentName.value} ${currentNumber.value}`;
+                }
                 indexToEdit = index;
             };
         })(i));
@@ -179,33 +186,35 @@ document.getElementById('number-selection-edit').addEventListener('change', func
     }
 });
 
-// document.getElementById('uploadCodes').addEventListener('change', function() {
-//     const uploadCodes= document.getElementById('uploadCodes');
-//     const customFileButton = document.getElementById('spielcodes-button');
+document.getElementById('uploadCodesEdit').addEventListener('change', function() {
+    const uploadCodes= document.getElementById('uploadCodesEdit');
+    const customFileButton = document.getElementById('spielcodes-button-edit');
 
-//     if (uploadCodes.files.length > 0) {
-//         customFileButton.textContent = uploadCodes.files[0].name;
-//         let file = uploadCodes.files[0];
-//         processSpielCodes(file);
-//         customFileButton.style.color = '#000';
-//     } else {
-//         customFileButton.textContent = 'Datei Auswählen';
-//     }
-// });
+    if (uploadCodes.files.length > 0) {
+        customFileButton.textContent = uploadCodes.files[0].name;
+        let file = uploadCodes.files[0];
+        processSpielCodes(file);
+        customFileButton.style.color = '#000';
+    } else {
+        customFileButton.textContent = 'Codes';
+        customFileButton.style.color = '#999';
+    }
+});
 
-// document.getElementById('uploadPins').addEventListener('change', function() {
-//     const uploadPins= document.getElementById('uploadPins');
-//     const customFileButton = document.getElementById('spielpins-button');
+document.getElementById('uploadPinsEdit').addEventListener('change', function() {
+    const uploadPins= document.getElementById('uploadPinsEdit');
+    const customFileButton = document.getElementById('spielpins-button-edit');
 
-//     if (uploadPins.files.length > 0) {
-//         customFileButton.textContent = uploadPins.files[0].name;
-//         let file = uploadPins.files[0];
-//         processSpielPins(file);
-//         customFileButton.style.color = '#000';
-//     } else {
-//         customFileButton.textContent = 'Datei Auswählen';
-//     }
-// });
+    if (uploadPins.files.length > 0) {
+        customFileButton.textContent = uploadPins.files[0].name;
+        let file = uploadPins.files[0];
+        processSpielPins(file);
+        customFileButton.style.color = '#000';
+    } else {
+        customFileButton.textContent = 'Pins';
+        customFileButton.style.color = '#999';
+    }
+});
 
 function processSpielCodes(file) {
     readCodes(file).then(data => {
@@ -256,9 +265,22 @@ function editTeam() {
         localStorage.setItem('listOfPins', JSON.stringify(listOfPins));
         localStorage.setItem('listOfCodes', JSON.stringify(listOfCodes));
         localStorage.setItem('listOfNames', JSON.stringify(listOfNames));
-        console.log("Mannschaft wurde aktualisiert");
+        console.log("Mannschaft wurde aktualisiert", indexToEdit);
         document.getElementById("editTeamModal").style.display = 'none';
         createTeamsList();
+        globalCodes = null;
+        globalPins = null;
+        const uploadCodes= document.getElementById('uploadCodesEdit');
+        uploadCodes.innerHTML = "";
+        const customFileButtonCodes = document.getElementById('spielcodes-button-edit');
+        customFileButtonCodes.textContent = 'Codes';
+        customFileButtonCodes.style.color = '#999';
+        const uploadPins= document.getElementById('uploadPinsEdit');
+        uploadPins.innerHTML = "";
+        const customFileButtonPins = document.getElementById('spielpins-button-edit');
+        customFileButtonPins.textContent = 'Pins';
+        customFileButtonPins.style.color = '#999';
+
     } else if (!globalPins && !globalCodes) {
         console.log(listOfNames);
         listOfNames[indexToEdit] = globalName;
@@ -268,7 +290,6 @@ function editTeam() {
         document.getElementById("editTeamModal").style.display = 'none';
         createTeamsList();
     }
-
 }
 
 function closeSettings() {

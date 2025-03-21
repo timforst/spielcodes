@@ -16,7 +16,7 @@
             <ul class="settings-list" id="teams-list"></ul>
         </div>
     </div>
-    <div class="center">
+    <div class="center" id="down-center">
         <button onclick="closeSettings()">Speichern</button>
         <button onclick="location.href='add.html'">Neue Mannschaft</button>
     </div>
@@ -59,9 +59,9 @@
                     <option value="XIV">XIV</option>
                     <option value="XV">XV</option>
                 </select>
-                <label for="uploadCodesEdit" class="custom-file-button">Codes</label>
+                <label for="uploadCodesEdit" class="custom-file-button" id="spielcodes-button-edit">Codes</label>
                 <input type="file" id="uploadCodesEdit" style="display: none;" accept="application/pdf">
-                <label for="uploadPinsEdit" class="custom-file-button">Pins</label>
+                <label for="uploadPinsEdit" class="custom-file-button" id="spielpins-button-edit">Pins</label>
                 <input type="file" id="uploadPinsEdit" style="display: none;" accept="application/pdf">
             </div>
             <div class="modal-buttons">

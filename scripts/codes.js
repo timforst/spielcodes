@@ -112,7 +112,8 @@ function generateButtons(team, showOld = false) {
     if (showOld) {
         for(let i = 0; i < pins[3].length; i++) {
             if (pins[3][i]) {
-                addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], codes[0][j], heimspiel = true);
+                console.log(codes[0][j], j)
+                addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], link=codes[0][j], heimspiel = true);
                 addPinButton(newButtonsContainer, pins[1][i], heimspiel = true);
                 j += 1;
             } else {
@@ -126,12 +127,17 @@ function generateButtons(team, showOld = false) {
             if (notPastDate(pins[0][i]) && k < 10) {
                 k +=1;
                 if (pins[3][i]) {
-                    addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], codes[0][j], heimspiel = true);
+                    console.log(codes[0][j], j)
+                    addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], link=codes[0][j], heimspiel = true);
                     addPinButton(newButtonsContainer, pins[1][i], heimspiel = true);
                     j += 1;
                 } else {
                     addCodeButton(newButtonsContainer, pins[2][i], pins[0][i], heimspiel = false);
                     addPinButton(newButtonsContainer, pins[1][i], heimspiel = false);
+                }
+            } else {
+                if (pins[3][i]) {
+                    j+=1
                 }
             }
         }

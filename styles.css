@@ -36,6 +36,13 @@ h1 {
     height: 50vh;
 }
 
+#down-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
 .center button:first-child {
     margin-right: 10vw; /* Adjust as needed */
 }
