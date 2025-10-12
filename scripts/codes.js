@@ -1,26 +1,28 @@
 let globalTeam = -1
 let dataList = null;
 let showingOld = false;
-let listOfPins = [];
-let listOfCodes = [];
+let pinDict = {};
+let codeDict = {};
+let nameDict = {};
 let listOfNames = [];
 
 function getQueryParam(name) {
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
-  }
+}
 
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     let team = parseInt(getQueryParam("team"));
     team = isNaN(team) ? -1 : team;
     globalTeam = team;
-    if (localStorage.getItem('listOfPins')) {
-        listOfPins = JSON.parse(localStorage.getItem('listOfPins'));
-        listOfCodes = JSON.parse(localStorage.getItem('listOfCodes'));
+    if (localStorage.getItem('listOfNames')) {
+        pinDict = JSON.parse(localStorage.getItem('pinDict'));
+        codeDict = JSON.parse(localStorage.getItem('codeDict'));
+        nameDict = JSON.parse(localStorage.getItem('nameDict'));
         listOfNames = JSON.parse(localStorage.getItem('listOfNames'));
-        generateButtons(globalTeam, showOld = false)
+        generateButtons(globalTeam, showOld = false);
     }
-  });
+});
 
 function loadData(scriptName, callback) {
     const script = document.createElement("script");
@@ -95,11 +97,10 @@ function generateButtons(team, showOld = false) {
     console.log(team);
     name = listOfNames[team];
     console.log(name);
-    pins = listOfPins[team];
-    // console.log(listOfPins);
-    codes = listOfCodes[team];
+    pins = pinDict[name];
+    codes = codeDict[name];
     const headline = document.getElementById('headline');
-    headline.textContent = name;
+    headline.textContent = nameDict[name];
     document.getElementById('back-button').style.display = 'block';
     document.getElementById('show-old-button').style.display = 'block';
     const newButtonsContainer = document.getElementById('new-buttons');
