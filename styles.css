@@ -148,10 +148,6 @@ li {
     margin: auto;
     min-height: 50vh;
 }
-.button-container button {
-    font-size: clamp(14px, 8vw, 48px) !important;
-}
-
 
 button {
     font-size: clamp(10px, 2vw, 32px);
@@ -174,8 +170,8 @@ button:active {
 }
 #initial-buttons button {
     width: 100%;
-    height: 100%;
-    font-size: 0.7rem;
+    height: 99%;
+    font-size: clamp(14px, 4vw, 32px);
     border: none;
     background-color: white;
     border: 2px solid black;
@@ -186,7 +182,6 @@ button:active {
 #number-selection {
     appearance: none; /* Remove default OS styles */
     width: 30vw;
-    /* height: clamp(32px, 5vw, 64px); */
     height: 54px;
     font-size: clamp(14px, 4vw, 32px);
     text-align: center;
