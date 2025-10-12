@@ -1,4 +1,3 @@
-verein = "FTT Hartmannshofen 1987";
 password = "";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (localStorage.getItem('password')) {
         password = JSON.parse(localStorage.getItem('password'));
+        if (password == "") {
+            document.getElementById('delete-password-button').textContent = 'Kein Passwort';
+        }
     } else {
         document.getElementById('delete-password-button').textContent = 'Kein Passwort';
     }
@@ -16,23 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('delete-teams-button').textContent = 'Gelöscht';
     }
 });
-
-const vereinInputField = document.getElementById("verein");
-vereinInputField.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        submitVereinsName();
-    }
-});
-
-function submitVereinsName() {
-    const vereinsName = document.getElementById('verein');
-    const name = vereinsName.value.trim();
-    if (name) {
-        let verein = name;
-        localStorage.setItem('verein', JSON.stringify(verein));
-        vereinsName.value = '';
-    }
-}
 
 const passwordInputField = document.getElementById("password");
 passwordInputField.addEventListener('keydown', function(event) {
@@ -70,8 +55,9 @@ function deletePassword() {
 
 function deleteTeams() {
     localStorage.removeItem('listOfNames');
-    localStorage.removeItem('listOfCodes');
-    localStorage.removeItem('listOfPins');
+    localStorage.removeItem('codeDict');
+    localStorage.removeItem('pinDict');
+    localStorage.removeItem('nameDict');
     document.getElementById('delete-teams-button').textContent = 'Gelöscht';
     document.getElementById('verificationModalDeleteAll').style.display = 'none';
 }

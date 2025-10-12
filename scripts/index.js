@@ -1,13 +1,15 @@
-let listOfPins = [];
-let listOfCodes = [];
+let pinDict = {};
+let codeDict = {};
+let nameDict = {};
 let listOfNames = [];
 let password = "";
 
 document.addEventListener('DOMContentLoaded', () => {
     loadInitialButtons();
-    if (localStorage.getItem('listOfPins')) {
-        listOfPins = JSON.parse(localStorage.getItem('listOfPins'));
-        listOfCodes = JSON.parse(localStorage.getItem('listOfCodes'));
+    if (localStorage.getItem('listOfNames')) {
+        pinDict = JSON.parse(localStorage.getItem('pinDict'));
+        codeDict = JSON.parse(localStorage.getItem('codeDict'));
+        nameDict = JSON.parse(localStorage.getItem('nameDict'));
         listOfNames = JSON.parse(localStorage.getItem('listOfNames'));
         loadInitialButtons();
     }
@@ -20,7 +22,7 @@ function loadInitialButtons() {
     const container = document.getElementById("initial-buttons");
     for (let i = 0; i < listOfNames.length; i++) {
         const btn = document.createElement("button");
-        btn.textContent = listOfNames[i];
+        btn.textContent = nameDict[listOfNames[i]];
         btn.onclick = (function(index) {
             return () => location.href = `codes.html?team=${index}`;
         })(i);
