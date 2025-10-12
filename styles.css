@@ -154,7 +154,7 @@ li {
 
 
 button {
-    font-size: clamp(14px, 4vw, 32px);
+    font-size: clamp(12px, 3vw, 32px);
     padding: 0.25em 0.5em;
     background-color: white;
     border: 2px solid black;
