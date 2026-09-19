@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spielcodes – Kalender</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            justify-content: flex-start;
+            height: auto;
+            min-height: 100vh;
+        }
+        #headline {
+            padding-top: 5vh;
+            margin-bottom: 6px;
+        }
+        .month-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4vw;
+            margin-bottom: 12px;
+        }
+        .month-nav button {
+            font-size: clamp(16px, 4vw, 26px);
+            padding: 0.1em 0.6em;
+        }
+        #month-label {
+            font-size: clamp(15px, 4vw, 26px);
+            font-weight: bold;
+            min-width: 38vw;
+            text-align: center;
+        }
+        #today-button {
+            position: absolute;
+            top: 1vh;
+            right: 1vw;
+            font-size: clamp(12px, 3vw, 20px);
+            border: none;
+            cursor: pointer;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+        .legend {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(10px, 2.5vw, 14px);
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .legend-swatch {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            border: 1px solid black;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+        .calendar-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            padding: 0 1vw 4vh 1vw;
+            box-sizing: border-box;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(90px, 1fr));
+            gap: 4px;
+            width: 100%;
+            min-width: 700px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .weekday-label {
+            text-align: center;
+            font-weight: bold;
+            padding: 4px 0;
+            font-size: clamp(10px, 2vw, 15px);
+            color: #555;
+        }
+        .day-cell {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            min-height: 92px;
+            padding: 3px;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+        .day-cell.empty {
+            background-color: transparent;
+            border-color: transparent;
+        }
+        .day-cell.today {
+            border: 2px solid #28a745;
+        }
+        .day-number {
+            font-size: clamp(10px, 2vw, 13px);
+            text-align: right;
+            padding: 1px 3px 3px 3px;
+            color: #333;
+        }
+        .day-cell.today .day-number {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .game-chip {
+            font-size: clamp(8px, 1.6vw, 11px);
+            line-height: 1.25;
+            padding: 1px 4px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            border: 1px solid black;
+            background-color: white;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .game-chip.heim {
+            background-color: #50b36d;
+            color: white;
+            border-color: #28a745;
+        }
+        .game-chip.more {
+            background-color: #eee;
+            text-align: center;
+            font-style: italic;
+            border-style: dashed;
+        }
+        #empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .team-select-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        #teamSelectModal .modal-content {
+            width: 90vw;
+            max-width: 500px;
+        }
+        #team-select-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px 0;
+            min-height: auto;
+        }
+        #team-select-buttons button.excluded {
+            color: #999;
+            border-color: #999;
+        }
+        #day-modal-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-height: 55vh;
+            overflow: auto;
+            margin: 10px 0;
+        }
+        #game-modal-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="back-button" style="display:block;" onclick="location.href='index.html'">←</button>
+    <button id="today-button" onclick="goToday()">Heute</button>
+    <h1 id="headline">Kalender</h1>
+    <div class="month-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <span id="month-label"></span>
+        <button onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="legend">
+        <span><span class="legend-swatch" style="background:#50b36d;"></span>Heimspiel</span>
+        <span><span class="legend-swatch" style="background:white;"></span>Auswärtsspiel</span>
+    </div>
+    <div class="team-select-row" id="team-select-row">
+        <button onclick="openTeamSelectModal()">Mannschaften auswählen</button>
+    </div>
+    <div id="empty-state" style="display:none;">
+        <p>Keine Mannschaften vorhanden.</p>
+        <button onclick="location.href='edit.html'">Mannschaften hinzufügen</button>
+    </div>
+    <div class="calendar-wrapper" id="calendar-wrapper">
+        <div class="calendar-grid" id="calendar-grid"></div>
+    </div>
+
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h2 id="game-modal-team"></h2>
+            <p id="game-modal-details"></p>
+            <div class="modal-buttons" id="game-modal-buttons"></div>
+            <div class="modal-buttons">
+                <button onclick="closeGameModal()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dayModal" class="modal">
+        <div class="modal-content">
+            <h2 id="day-modal-title"></h2>
+            <div id="day-modal-list"></div>
+            <div class="modal-buttons">
+                <button onclick="closeDayModal()">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="teamSelectModal" class="modal">
+        <div class="modal-content">
+            <h2>Mannschaften auswählen</h2>
+            <div id="team-select-buttons"></div>
+            <div class="modal-buttons">
+                <button onclick="includeAllTeamsTemp()">Alle einschließen</button>
+                <button onclick="excludeAllTeamsTemp()">Alle ausschließen</button>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="discardTeamSelection()">Verwerfen</button>
+                <button onclick="confirmTeamSelection()">Bestätigen</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/calendar.js"></script>
+</body>
+</html>
