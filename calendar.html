@@ -24,11 +24,11 @@
             margin-bottom: 12px;
         }
         .month-nav button {
-            font-size: clamp(16px, 4vw, 26px);
+            font-size: clamp(18px, 4.5vw, 28px);
             padding: 0.1em 0.6em;
         }
         #month-label {
-            font-size: clamp(15px, 4vw, 26px);
+            font-size: clamp(17px, 4.5vw, 28px);
             font-weight: bold;
             min-width: 38vw;
             text-align: center;
@@ -37,7 +37,7 @@
             position: absolute;
             top: 1vh;
             right: 1vw;
-            font-size: clamp(12px, 3vw, 20px);
+            font-size: clamp(15px, 3.5vw, 22px);
             border: none;
             cursor: pointer;
             background-color: white;
@@ -49,7 +49,7 @@
             gap: 16px;
             align-items: center;
             justify-content: center;
-            font-size: clamp(10px, 2.5vw, 14px);
+            font-size: clamp(12px, 3vw, 15px);
             color: #444;
             margin-bottom: 10px;
         }
@@ -70,10 +70,9 @@
         }
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, minmax(90px, 1fr));
-            gap: 4px;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 3px;
             width: 100%;
-            min-width: 700px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -81,14 +80,14 @@
             text-align: center;
             font-weight: bold;
             padding: 4px 0;
-            font-size: clamp(10px, 2vw, 15px);
+            font-size: clamp(11px, 3vw, 15px);
             color: #555;
         }
         .day-cell {
             border: 1px solid #ddd;
             border-radius: 6px;
-            min-height: 92px;
-            padding: 3px;
+            min-height: 84px;
+            padding: 2px;
             display: flex;
             flex-direction: column;
             background-color: #f9f9f9;
@@ -102,7 +101,7 @@
             border: 2px solid #28a745;
         }
         .day-number {
-            font-size: clamp(10px, 2vw, 13px);
+            font-size: clamp(10px, 2.8vw, 13px);
             text-align: right;
             padding: 1px 3px 3px 3px;
             color: #333;
@@ -112,13 +111,14 @@
             font-weight: bold;
         }
         .game-chip {
-            font-size: clamp(8px, 1.6vw, 11px);
+            font-size: clamp(9px, 2.8vw, 12px);
             line-height: 1.25;
-            padding: 1px 4px;
+            padding: 1px 3px;
             margin-bottom: 2px;
             border-radius: 4px;
             border: 1px solid black;
             background-color: white;
+            color: black;
             cursor: pointer;
             overflow: hidden;
             white-space: nowrap;
